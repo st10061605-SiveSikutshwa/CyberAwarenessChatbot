@@ -20,4 +20,4 @@ This console app is a beginner-friendly cybersecurity assistant designed for awa
 
 ## GitHub Actions CI
 This project uses GitHub Actions to run a build check on push.
-.github/workflows/build.yml
+[![.NET Build Check](https://github.com/st10061605-SiveSikutshwa/CyberAwarenessChatbot/actions/workflows/build.yml/badge.svg?event=push)](https://github.com/st10061605-SiveSikutshwa/CyberAwarenessChatbot/actions/workflows/build.yml)
