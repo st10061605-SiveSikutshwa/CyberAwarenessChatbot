@@ -20,3 +20,4 @@ This console app is a beginner-friendly cybersecurity assistant designed for awa
 
 ## GitHub Actions CI
 This project uses GitHub Actions to run a build check on push.
+.github/workflows/build.yml
