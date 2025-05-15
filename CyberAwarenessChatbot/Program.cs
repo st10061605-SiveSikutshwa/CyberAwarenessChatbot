@@ -7,6 +7,17 @@ namespace CyberAwarenessChatbot
 {
     class Program
     {
+        // This dictionary links keywords (like "password", "scam", "privacy") to specific cybersecurity tips.
+        // It helps the bot recognize what topic the user is asking about and reply with the right message.
+
+        static Dictionary<string, string> keywordResponses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "password", "Tip: Use strong, unique passwords for every account. Avoid using personal information." },
+            { "scam", "Tip: Be cautious of messages requesting personal info. Scammers often pretend to be trusted companies." },
+            { "privacy", "Tip: Regularly review your privacy settings on social media and other platforms." }
+        };
+
+
         static void Main(string[] args)
         {
             Console.Title = "Cybersecurity Awareness Bot";
@@ -85,6 +96,9 @@ namespace CyberAwarenessChatbot
             }
         }
 
+        // This method takes the user's input and helps the bot decide how to respond.
+        // It first checks for general questions, then tries to match keywords from the dictionary.
+        // If no match is found, it shows a default response.
         static void RespondToUser(string input)
         {
             if (input.Contains("how are you"))
@@ -97,23 +111,25 @@ namespace CyberAwarenessChatbot
             }
             else if (input.Contains("ask") || input.Contains("topics"))
             {
-                DisplayResponse("You can ask me about password safety, phishing, or safe browsing.");
-            }
-            else if (input.Contains("password"))
-            {
-                DisplayResponse("Use long, unique passwords with letters, numbers, and symbols. Avoid using the same password twice.");
-            }
-            else if (input.Contains("phishing"))
-            {
-                DisplayResponse("Watch out for suspicious emails or messages asking for personal information. Never click on unknown links.");
-            }
-            else if (input.Contains("safe browsing"))
-            {
-                DisplayResponse("Avoid visiting untrusted websites. Use secure connections and always log out of accounts when done.");
+                DisplayResponse("You can ask me about password safety, phishing, scams, or privacy settings.");
             }
             else
             {
-                DisplayResponse("I didn’t quite understand that. Could you rephrase?");
+                bool keywordFound = false;
+                foreach (var keyword in keywordResponses.Keys)
+                {
+                    if (input.Contains(keyword))
+                    {
+                        DisplayResponse(keywordResponses[keyword]);
+                        keywordFound = true;
+                        break;
+                    }
+                }
+
+                if (!keywordFound)
+                {
+                    DisplayResponse("I didn’t quite understand that. Could you rephrase?");
+                }
             }
         }
 
