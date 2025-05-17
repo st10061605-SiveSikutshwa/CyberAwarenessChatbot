@@ -10,11 +10,36 @@ namespace CyberAwarenessChatbot
         // This dictionary links keywords (like "password", "scam", "privacy") to specific cybersecurity tips.
         // It helps the bot recognize what topic the user is asking about and reply with the right message.
 
-        static Dictionary<string, string> keywordResponses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        static Dictionary<string, List<string>> keywordResponses = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
         {
-            { "password", "Tip: Use strong, unique passwords for every account. Avoid using personal information." },
-            { "scam", "Tip: Be cautious of messages requesting personal info. Scammers often pretend to be trusted companies." },
-            { "privacy", "Tip: Regularly review your privacy settings on social media and other platforms." }
+            { "password", new List<string>
+                {
+                    "Tip: Use long, unique passwords for each account.",
+                    "Tip: Never reuse the same password on multiple websites.",
+                    "Tip: Avoid using personal info like birthdays or names in passwords."
+                }
+            },
+            { "scam", new List<string>
+                {
+                    "Tip: Be cautious of emails or messages asking for urgent action.",
+                    "Tip: Scammers often pretend to be trusted companies.",
+                    "Tip: Always verify a link before clicking on it."
+                }
+            },
+            { "privacy", new List<string>
+                {
+                    "Tip: Check your social media privacy settings often.",
+                    "Tip: Don’t overshare personal details online.",
+                    "Tip: Disable location tracking unless you need it."
+                }
+            },
+            { "phishing", new List<string>
+                {
+                    "Tip: Don’t click links from unknown senders.",
+                    "Tip: Check for spelling mistakes in emails — it’s often a sign of phishing.",
+                    "Tip: Legit companies will never ask for your password by email."
+                }
+            }
         };
 
 
@@ -96,11 +121,12 @@ namespace CyberAwarenessChatbot
             }
         }
 
-        // This method takes the user's input and helps the bot decide how to respond.
-        // It first checks for general questions, then tries to match keywords from the dictionary.
-        // If no match is found, it shows a default response.
+        // This method processes user input by first checking for casual conversation, then scanning for cybersecurity keywords.
+        // If a keyword is found, it responds with a random relevant tip.
+
         static void RespondToUser(string input)
         {
+            // Step 1: Handle general or small-talk responses
             if (input.Contains("how are you"))
             {
                 DisplayResponse("I'm just a bot, but I'm ready to help you stay secure online!");
@@ -115,17 +141,29 @@ namespace CyberAwarenessChatbot
             }
             else
             {
+                // Step 2: Look for keywords related to cybersecurity
                 bool keywordFound = false;
+
                 foreach (var keyword in keywordResponses.Keys)
                 {
                     if (input.Contains(keyword))
                     {
-                        DisplayResponse(keywordResponses[keyword]);
+                        // Get the list of tips for the matched keyword
+                        var tips = keywordResponses[keyword];
+
+                        // Pick one tip at random using the Random class
+                        Random rand = new Random();
+                        string selectedTip = tips[rand.Next(tips.Count)];
+
+                        // Display the randomly selected tip
+                        DisplayResponse(selectedTip);
+
                         keywordFound = true;
-                        break;
+                        break; // Stop after first match
                     }
                 }
 
+                // Step 3: Handle unknown or unsupported input
                 if (!keywordFound)
                 {
                     DisplayResponse("I didn’t quite understand that. Could you rephrase?");
