@@ -179,6 +179,20 @@ namespace CyberAwarenessChatbot
                 }
             }
 
+            // Step: Helps the bot detect the emotional side of the chat
+            else if (input.Contains("worried") || input.Contains("anxious") || input.Contains("nervous"))
+            {
+                DisplayResponse("It's completely normal to feel that way. Cybersecurity can be confusing, but I'm here to help!");
+            }
+            else if (input.Contains("frustrated") || input.Contains("overwhelmed"))
+            {
+                DisplayResponse("I'm sorry you're feeling that way. Let's tackle it one step at a time together.");
+            }
+            else if (input.Contains("curious") || input.Contains("interested") || input.Contains("excited"))
+            {
+                DisplayResponse("I love your curiosity! Let's explore more about staying safe online.");
+            }
+
 
             else
             {
