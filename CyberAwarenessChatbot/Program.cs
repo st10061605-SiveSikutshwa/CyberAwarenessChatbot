@@ -42,6 +42,11 @@ namespace CyberAwarenessChatbot
             }
         };
 
+        // This stores the user's name and interest for later use
+        static string userName = "";
+        static string userInterest = "";
+
+
 
         static void Main(string[] args)
         {
@@ -59,10 +64,16 @@ namespace CyberAwarenessChatbot
             ShowAsciiArt();
 
             // Get user name
-            Console.Write("\nPlease enter your name: ");
-            string name = Console.ReadLine();
+            //Console.Write("\nPlease enter your name: ");
+            //string name = Console.ReadLine();
+            //Console.WriteLine();
+            //DisplayResponse($"Hello, {name}! I'm your Cybersecurity Awareness Assistant.");
+
+            //
+            userName = Console.ReadLine();
             Console.WriteLine();
-            DisplayResponse($"Hello, {name}! I'm your Cybersecurity Awareness Assistant.");
+            DisplayResponse($"Hello, {userName}! I'm your Cybersecurity Awareness Assistant.");
+
 
             // Chat loop
             while (true)
@@ -139,6 +150,36 @@ namespace CyberAwarenessChatbot
             {
                 DisplayResponse("You can ask me about password safety, phishing, scams, or privacy settings.");
             }
+
+            // Check if the user mentions a topic of interest
+            else if (input.Contains("interested in"))
+            {
+                int index = input.IndexOf("interested in") + "interested in".Length;
+                if (index < input.Length)
+                {
+                    userInterest = input.Substring(index).Trim();
+                    DisplayResponse($"Great! I'll remember that you're interested in {userInterest}.");
+                }
+                else
+                {
+                    DisplayResponse("Thanks for sharing! Could you tell me which topic you're interested in?");
+                }
+            }
+
+            // If the user wants the bot to recall what they said earlier
+            else if (input.Contains("what do you remember") || input.Contains("my interest"))
+            {
+                if (!string.IsNullOrEmpty(userInterest))
+                {
+                    DisplayResponse($"You told me you're interested in {userInterest}, {userName}. That's a smart focus!");
+                }
+                else
+                {
+                    DisplayResponse("I don’t think you've told me what you're interested in yet.");
+                }
+            }
+
+
             else
             {
                 // Step 2: Look for keywords related to cybersecurity
