@@ -47,7 +47,7 @@ Make sure your code builds clean before submission.
 ## Folder Structure
 
 CyberAwarenessChatbot/
-??? Assets/
+├── Assets/
 ? ??? welcome.wav
 ? ??? ascii_logo.txt
 ??? Program.cs
